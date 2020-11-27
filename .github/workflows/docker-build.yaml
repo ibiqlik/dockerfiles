@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        dockerfile: [dev]
+        dockerfile: [dev, alpine-jq]
     steps:
       - uses: actions/checkout@v2
       - name: Build image
