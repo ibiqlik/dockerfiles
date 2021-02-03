@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     sshpass \
     bash-completion \
     iputils-ping \
-    dnsutils
+    dnsutils \
+    vim
 
 RUN pip install yamllint
 
