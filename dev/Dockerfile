@@ -1,3 +1,5 @@
+FROM bitnami/git:2.30.1 AS git
+
 FROM python:3-slim-buster
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -5,7 +7,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     curl \
     wget \
     sudo \
-    git \
     gzip \
     tar \
     jq \
@@ -27,6 +28,9 @@ COPY --from=docker:20.10 /usr/local/bin/docker /usr/local/bin/docker
 COPY --from=hairyhenderson/gomplate:v3.9.0 /gomplate /bin/gomplate
 COPY --from=mcr.microsoft.com/powershell:lts-debian-buster-slim /opt/microsoft/powershell/7-lts/ /opt/microsoft/powershell/7-lts/
 RUN chmod a+x,o-w /opt/microsoft/powershell/7-lts/pwsh && ln -s /opt/microsoft/powershell/7-lts/pwsh /usr/local/bin/pwsh
+
+COPY --from=git /opt/bitnami/git/ /opt/bitnami/git/
+ENV PATH="/opt/bitnami/git/bin:${PATH}"
 
 WORKDIR /home
 
